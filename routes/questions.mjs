@@ -24,6 +24,7 @@ router.get('/', async (req, res) => {
 //@access: Private (only user(isAdmin))
 router.post('/', [
     check('question', 'Please add the question').not().isEmpty(),
+    check('answer', 'Answer must be a boolean value').isBoolean()
 ], async(req, res) =>{
     //Check if any validation errors
     const errors = validationResult(req);
@@ -37,6 +38,18 @@ router.post('/', [
         res.status(200).json(question);
     } catch (err) {
         console.error({error: [{msg: 'Server Error'}]})
+    }
+})
+
+//get random 10 questions
+router.get('/random10', async(req, res) => {
+    try {
+        const questions = await Question.aggregate([
+            { $sample: { size: 10 }}
+        ]);
+        res.json(questions);
+    } catch (err) {
+        res.status(500).send({error: [{msg: 'Server error'}]})
     }
 })
 
@@ -96,4 +109,6 @@ router.delete('/:id', async (req, res) =>{
         res.status(500).send({error: [{msg: 'Server error'}]})
     }
 });
+
+
 export default router;

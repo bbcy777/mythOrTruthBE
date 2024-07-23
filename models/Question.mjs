@@ -19,7 +19,7 @@ const QuestionSchema = new mongoose.Schema({
     numTaken: {
         type: Number,
     },
-    correctAnswer: {
+    correctAnswered: {
         type: Number,
     },
     category: {
