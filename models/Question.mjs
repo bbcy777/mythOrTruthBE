@@ -21,6 +21,10 @@ const QuestionSchema = new mongoose.Schema({
     },
     correctAnswer: {
         type: Number,
+    },
+    category: {
+        type: String,
+        enum: ['environment', 'energy', 'health'],
     }
 })
 
