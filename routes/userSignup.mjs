@@ -10,7 +10,7 @@ const router = express.Router();
 // @desc:    Create route
 // @access:  Public
 router.post('/', [
-    check('username', 'User name is required').not().isEmpty(),
+    check('userName', 'User name is required').not().isEmpty(),
     check('email', 'Please include a valid email').isEmail(),
     check('password', 'Please enter a password with 6 or more characters').isLength({min: 6})
 ], async (req, res) => {
@@ -22,7 +22,7 @@ router.post('/', [
 
     //Destructure our req
     const {userName, email, password} = req.body
-
+    console.log(req.body)
     try {
         //Check if user already exists
         let user = await User.findOne({email});
@@ -42,12 +42,12 @@ router.post('/', [
             email,
             password,
         })
-
+        
         //Encrypt password
         const salt = await bcrypt.genSalt(10)
 
         user.password = await bcrypt.hash(password, salt)
-
+        console.log(user)
         await user.save()
 
         //Creating payload (data for the front end) for jwt
