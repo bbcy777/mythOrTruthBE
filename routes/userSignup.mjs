@@ -22,7 +22,7 @@ router.post('/', [
 
     //Destructure our req
     const {userName, email, password} = req.body
-    console.log(req.body)
+    // console.log(req.body)
     try {
         //Check if user already exists
         let user = await User.findOne({email});
@@ -47,7 +47,7 @@ router.post('/', [
         const salt = await bcrypt.genSalt(10)
 
         user.password = await bcrypt.hash(password, salt)
-        console.log(user)
+        // console.log(user)
         await user.save()
 
         //Creating payload (data for the front end) for jwt
