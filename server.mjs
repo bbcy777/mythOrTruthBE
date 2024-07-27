@@ -4,6 +4,7 @@ import dotenv from 'dotenv';
 import userLogin from './routes/userLogin.mjs';
 import userSinup from './routes/userSignup.mjs';
 import questions from './routes/questions.mjs';
+import favCart from './routes/favCart.mjs'
 
 import cors from 'cors';
 
@@ -20,10 +21,25 @@ connectDB();
 app.use(cors());
 app.use(express.json({ extended: false }));
 
+app.use((req, res, next) => {
+    const time = new Date();
+  
+    console.log(
+      `-----
+  ${time.toLocaleTimeString()}: Received a ${req.method} request to ${req.url}.`
+    );
+    if (Object.keys(req.body).length > 0) {
+      console.log('Containing the data:');
+      console.log(`${JSON.stringify(req.body)}`);
+    }
+    next();
+  });
+  
 //Define Routes
 app.use('/user/login', userLogin);
 app.use('/user/signup', userSinup);
 app.use('/questions', questions);
+app.use('/user/:id/favcart', favCart)
 
 //Single endpoint just to test API. Send data to browser
 app.get('/', (req, res) => res.send('API Running'))

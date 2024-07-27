@@ -3,6 +3,7 @@ import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import { check, validationResult } from 'express-validator';
 import User from '../models/User.mjs';
+import Cart from '../models/Cart.mjs';
 
 const router = express.Router();
 
@@ -68,6 +69,10 @@ router.post('/', [
                 res.json({token});
             }
         )
+
+        //Create a cart for the new user
+        const cart = new Cart({ user: user._id, questions: [] });
+        await cart.save();
 
     } catch (err) {
         console.error(err)

@@ -17,6 +17,10 @@ const UserSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Cart'
     },
+    favoriteQuestions:{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Question'
+    },
     isAdmin: {
         type: Boolean,
         default: false,

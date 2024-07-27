@@ -1,5 +1,5 @@
 import mongoose, { Schema } from "mongoose";
-import User from "./User.mjs";
+import Question from "./Question.mjs";
 
 const CartSchema = new Schema({
     user: {
@@ -7,10 +7,10 @@ const CartSchema = new Schema({
         ref: 'User',
         required: true,
     },
-    questions: {
+    questions: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Question'
-    }
+    }]
 })
 const Cart = mongoose.model('cart', CartSchema);
 
