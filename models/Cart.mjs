@@ -1,7 +1,7 @@
 import mongoose, { Schema } from "mongoose";
 import Question from "./Question.mjs";
 
-const CartSchema = new Schema({
+const CartSchema = new mongoose.Schema({
     user: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
@@ -12,6 +12,6 @@ const CartSchema = new Schema({
         ref: 'Question'
     }]
 })
-const Cart = mongoose.model('cart', CartSchema);
+const Cart = mongoose.model('Cart', CartSchema);
 
 export default Cart;

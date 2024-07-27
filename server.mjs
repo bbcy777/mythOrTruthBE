@@ -34,12 +34,12 @@ app.use((req, res, next) => {
     }
     next();
   });
-  
+
 //Define Routes
 app.use('/user/login', userLogin);
 app.use('/user/signup', userSinup);
 app.use('/questions', questions);
-app.use('/user/:id/favcart', favCart)
+app.use('/favcart', favCart)
 
 //Single endpoint just to test API. Send data to browser
 app.get('/', (req, res) => res.send('API Running'))
