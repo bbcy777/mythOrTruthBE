@@ -21,7 +21,6 @@ router.get('/', async (req, res) => {
 })
 
 //@route: POST
-//@access: Private (only user(isAdmin))
 router.post('/', [
     check('question', 'Please add the question').not().isEmpty(),
     check('answer', 'Answer must be a boolean value').isBoolean()
@@ -54,7 +53,6 @@ router.get('/random10', async(req, res) => {
 })
 
 //@route: GET a question by id
-//@access: Public
 router.get('/:id', async (req, res) => {
     try{
         const questionId = req.params.id;
@@ -74,26 +72,27 @@ router.get('/:id', async (req, res) => {
 })
 
 //@route: Update a question
-//@access: Private (only user(isAdmin))
 router.put('/:id', async (req, res) => {
     try{
         const questionId = req.params.id;
         if (!mongoose.Types.ObjectId.isValid(questionId)){
+            console.log('Invalid Question ID:', questionId);
             return res.status(400).json({error: [{msg: 'Invalid Question ID'}]})
         };
         const newDocument = req.body
         const itemUpdate = await Question.findByIdAndUpdate(questionId,newDocument, {new: true, runValidators: true});
         if (!itemUpdate) {
+            console.log(`Item doesn't exist: ${questionId}`);
             return res.status(404).json({error: [{msg: `Item doesn't exist`}]});
         };
         res.status(200).json(itemUpdate);
     } catch(err) {
+        console.error('Server Error:', err);
         res.status(500).send({error: [{msg: 'Server Error'}]})
     }
 })
 
 //@route: Delete a question
-//@access: Private (only user(isAdmin))
 router.delete('/:id', async (req, res) =>{
     try{
         const questionId = req.params.id;

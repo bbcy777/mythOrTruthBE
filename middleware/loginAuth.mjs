@@ -3,7 +3,7 @@ import jwt from 'jsonwebtoken';
 export default (req, res, next) => {
     //Pull token out of header
     const token = req.header('x-auth-token');
-
+    console.log(req.header)
     //If no token is found
     if(!token) {
         return res.status(401).json({ error: [{ msg: 'No Token, Authorization Denied.'}]});
